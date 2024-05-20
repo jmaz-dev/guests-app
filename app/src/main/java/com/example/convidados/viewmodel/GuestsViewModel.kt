@@ -4,11 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.convidados.models.GuestModel
-import com.example.convidados.repository.GuestRepository
+import com.example.convidados.data.GuestRepository
 
-class AllGuestsViewModel(application: Application) : AndroidViewModel(application) {
+class GuestsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = GuestRepository.getInstance(application)
 
@@ -18,6 +17,14 @@ class AllGuestsViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getAllGuests() {
         listAllGuests.value = repository.getAllGuests()
+    }
+
+    fun getPresents() {
+        listAllGuests.value = repository.getPresents()
+    }
+
+    fun getAbsents() {
+        listAllGuests.value = repository.getAbsents()
     }
 
     fun delete(id: Int) {

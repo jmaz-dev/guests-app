@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
+        /*Float Action Button ClickListener*/
         binding.appBarMain.fab.setOnClickListener {
             startActivity(Intent(applicationContext, GuestFormActivity::class.java))
         }

@@ -1,7 +1,9 @@
 package com.example.convidados.view.viewholder
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.convidados.databinding.RowGuestBinding
 import com.example.convidados.models.GuestModel
@@ -16,12 +18,19 @@ class GuestViewHolder(private val bind: RowGuestBinding, private val listener: O
         bind.textName.text = guest.name
         bind.textStatus.text = "Status: $present"
 
-        bind.textName.setOnClickListener {
+        bind.linearLayoutConvidado.setOnClickListener {
             listener.onClick(guest.id)
         }
 
-        bind.textName.setOnLongClickListener {
-            listener.onDelete(guest.id)
+        bind.linearLayoutConvidado.setOnLongClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("Remover convidado")
+                .setMessage("Deseja remover o convidado ${guest.name}?")
+                .setPositiveButton("Sim") { dialog, which ->
+                    listener.onDelete(guest.id)
+                }
+                .setNegativeButton("Não", null).create().show()
+
             true
         }
     }

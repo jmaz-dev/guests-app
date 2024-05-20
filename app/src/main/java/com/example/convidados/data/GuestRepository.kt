@@ -1,4 +1,4 @@
-package com.example.convidados.repository
+package com.example.convidados.data
 
 import android.content.Context
 import androidx.core.content.contentValuesOf
@@ -67,6 +67,44 @@ class GuestRepository private constructor(context: Context) {
             true
         } catch (e: Exception) {
             false
+        }
+    }
+
+    fun getGuestById(guestId: Int): GuestModel? {
+        var guest: GuestModel? = null
+        try {
+            val db = guestDataBase.readableDatabase
+
+            val projection = arrayOf(
+                columnIdName,
+                columnNameName,
+                columnPresenceName
+            )
+
+            val selection = "$columnIdName = ?"
+            val args = arrayOf(guestId.toString())
+
+            val cursor = db.query(
+                guestTable,
+                projection,
+                selection,
+                args, null, null, null
+            )
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    val name = cursor.getString(cursor.getColumnIndexOrThrow(columnNameName))
+                    val presence = cursor.getInt(cursor.getColumnIndexOrThrow(columnPresenceName))
+
+                    guest = GuestModel(guestId, name, presence == 1)
+                }
+            }
+            cursor.close()
+            return guest
+
+
+        } catch (e: Exception) {
+            return guest
         }
     }
 
@@ -189,7 +227,7 @@ class GuestRepository private constructor(context: Context) {
             val db = guestDataBase.readableDatabase
 
             val cursor =
-                db.rawQuery("SELECT id, name, presence FROM Guest WHERE presence = 1", null)
+                db.rawQuery("SELECT id, name, presence FROM Guest WHERE presence = 0", null)
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
