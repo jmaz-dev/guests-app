@@ -9,9 +9,9 @@ class GuestRepository private constructor(context: Context) {
 
     private val guestDataBase = GuestDataBase(context)
     private val guestTable: String = DataBaseConstants.GUEST.TABLE_NAME
-    private val columnId: String = DataBaseConstants.GUEST.COLUMNS.ID
-    private val columnName: String = DataBaseConstants.GUEST.COLUMNS.NAME
-    private val columnPresence: String = DataBaseConstants.GUEST.COLUMNS.PRESENCE
+    private val columnIdName: String = DataBaseConstants.GUEST.COLUMNS.ID
+    private val columnNameName: String = DataBaseConstants.GUEST.COLUMNS.NAME
+    private val columnPresenceName: String = DataBaseConstants.GUEST.COLUMNS.PRESENCE
 
     /*Singleton*/
     companion object {
@@ -33,8 +33,8 @@ class GuestRepository private constructor(context: Context) {
 
             val values = contentValuesOf()
 
-            values.put(columnName, guest.name)
-            values.put(columnPresence, presence)
+            values.put(columnNameName, guest.name)
+            values.put(columnPresenceName, presence)
 
             db.insert(guestTable, null, values)
             true
@@ -49,12 +49,13 @@ class GuestRepository private constructor(context: Context) {
 
             val presence = if (guest.presence) 1 else 0
 
+            /*Replace values*/
             val values = contentValuesOf()
-            values.put(columnName, guest.name)
-            values.put(columnPresence, presence)
+            values.put(columnNameName, guest.name)
+            values.put(columnPresenceName, presence)
 
-            /*set WHERE id = id ARGS*/
-            val selection = columnId + " = ?"
+            /*set WHERE id = [ARGS]*/
+            val selection = "$columnIdName = ?"
             val args = arrayOf(guest.id.toString())
 
             db.update(
@@ -74,11 +75,11 @@ class GuestRepository private constructor(context: Context) {
             val db = guestDataBase.writableDatabase
 
             /*set WHERE id = id ARGS*/
-            val selection = columnId + " = ?"
+            val selection = "$columnIdName = ?"
             val args = arrayOf(id.toString())
 
             db.delete(
-                columnId,
+                guestTable,
                 selection,
                 args
             )
@@ -95,9 +96,9 @@ class GuestRepository private constructor(context: Context) {
             val db = guestDataBase.readableDatabase
 
             val projection = arrayOf(
-                columnId,
-                columnName,
-                columnPresence
+                columnIdName,
+                columnNameName,
+                columnPresenceName
             )
 
             val cursor = db.query(
@@ -114,13 +115,13 @@ class GuestRepository private constructor(context: Context) {
                 while (cursor.moveToNext()) {
 
                     val id =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnId))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnIdName))
 
                     val name =
-                        cursor.getString(cursor.getColumnIndexOrThrow(columnName))
+                        cursor.getString(cursor.getColumnIndexOrThrow(columnNameName))
 
                     val presence =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresence))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresenceName))
 
                     list.add(GuestModel(id, name, presence == 1))
                 }
@@ -140,12 +141,12 @@ class GuestRepository private constructor(context: Context) {
             val db = guestDataBase.readableDatabase
 
             val projection = arrayOf(
-                columnId,
-                columnName,
-                columnPresence
+                columnIdName,
+                columnNameName,
+                columnPresenceName
             )
 
-            val selection = "$columnPresence = ?"
+            val selection = "$columnPresenceName = ?"
             val args = arrayOf("1")
 
             val cursor = db.query(
@@ -162,13 +163,13 @@ class GuestRepository private constructor(context: Context) {
                 while (cursor.moveToNext()) {
 
                     val id =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnId))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnIdName))
 
                     val name =
-                        cursor.getString(cursor.getColumnIndexOrThrow(columnName))
+                        cursor.getString(cursor.getColumnIndexOrThrow(columnNameName))
 
                     val presence =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresence))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresenceName))
 
                     list.add(GuestModel(id, name, presence == 1))
                 }
@@ -194,13 +195,13 @@ class GuestRepository private constructor(context: Context) {
                 while (cursor.moveToNext()) {
 
                     val id =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnId))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnIdName))
 
                     val name =
-                        cursor.getString(cursor.getColumnIndexOrThrow(columnName))
+                        cursor.getString(cursor.getColumnIndexOrThrow(columnNameName))
 
                     val presence =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresence))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(columnPresenceName))
 
                     list.add(GuestModel(id, name, presence == 1))
                 }
