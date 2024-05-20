@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.convidados.constants.DataBaseConstants
 import com.example.convidados.databinding.FragmentPresentsBinding
+import com.example.convidados.models.GuestModel
 import com.example.convidados.view.adapter.GuestAdapter
 import com.example.convidados.view.listener.OnGuestListener
 import com.example.convidados.viewmodel.GuestsViewModel
@@ -30,10 +31,10 @@ class PresentsFragment : Fragment() {
         _binding = FragmentPresentsBinding.inflate(inflater, container, false)
 
         /*Layout*/
-        binding.recyclerGuests.layoutManager = LinearLayoutManager(context)
+        binding.recyclerPresentGuests.layoutManager = LinearLayoutManager(context)
 
         /*Adapter*/
-        binding.recyclerGuests.adapter = adapter
+        binding.recyclerPresentGuests.adapter = adapter
 
         /*Get Listener*/
         val listener = object : OnGuestListener {

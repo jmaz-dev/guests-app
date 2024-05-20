@@ -8,7 +8,7 @@ import com.example.convidados.models.GuestModel
 import com.example.convidados.data.GuestRepository
 
 class GuestFormViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = GuestRepository.getInstance(application)
+    private val repository = GuestRepository(application)
 
     private val listGuestById = MutableLiveData<GuestModel>()
     val guest: LiveData<GuestModel> = listGuestById

@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    implementation("com.intellij:annotations:12.0") {
+        exclude(group = "org.jetbrains", module = "annotations")
+    }
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.compiler)
     implementation(libs.androidx.core.ktx)

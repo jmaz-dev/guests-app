@@ -9,10 +9,9 @@ import com.example.convidados.data.GuestRepository
 
 class GuestsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = GuestRepository.getInstance(application)
+    private val repository = GuestRepository(application)
 
     private val listAllGuests = MutableLiveData<List<GuestModel>>()
-
     val guests: LiveData<List<GuestModel>> = listAllGuests
 
     fun getAllGuests() {
@@ -27,7 +26,8 @@ class GuestsViewModel(application: Application) : AndroidViewModel(application) 
         listAllGuests.value = repository.getAbsents()
     }
 
-    fun delete(id: Int) {
-        repository.deleteGuest(id)
+    fun delete(guestId: Int) {
+        val guest = repository.getGuestById(guestId)
+        repository.deleteGuest(guest)
     }
 }

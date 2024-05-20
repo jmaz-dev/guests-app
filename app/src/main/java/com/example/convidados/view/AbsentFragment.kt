@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.convidados.constants.DataBaseConstants
 import com.example.convidados.databinding.FragmentAbsentBinding
+import com.example.convidados.models.GuestModel
 import com.example.convidados.view.adapter.GuestAdapter
 import com.example.convidados.view.listener.OnGuestListener
 import com.example.convidados.viewmodel.GuestsViewModel
@@ -28,10 +29,10 @@ class AbsentFragment : Fragment() {
         viewModel = ViewModelProvider(this)[GuestsViewModel::class.java]
 
         /*Layout*/
-        binding.recyclerGuests.layoutManager = LinearLayoutManager(context)
+        binding.recyclerAbsentGuests.layoutManager = LinearLayoutManager(context)
 
         /*Adapter*/
-        binding.recyclerGuests.adapter = adapter
+        binding.recyclerAbsentGuests.adapter = adapter
 
         /*Get Listener*/
         val listener = object : OnGuestListener {
