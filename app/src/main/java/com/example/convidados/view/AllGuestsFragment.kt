@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.convidados.constants.DataBaseConstants
 import com.example.convidados.databinding.FragmentAllGuestsBinding
+import com.example.convidados.models.GuestModel
 import com.example.convidados.view.adapter.GuestAdapter
 import com.example.convidados.view.listener.OnGuestListener
 import com.example.convidados.viewmodel.GuestsViewModel
@@ -34,10 +35,10 @@ class AllGuestsFragment : Fragment() {
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
 
         /*Layout(RecyclerView id)*/
-        binding.recyclerGuests.layoutManager = LinearLayoutManager(context)
+        binding.recyclerAllGuests.layoutManager = LinearLayoutManager(context)
 
         /*Adapter(Layout that fill the RecyclerView)*/
-        binding.recyclerGuests.adapter = adapter
+        binding.recyclerAllGuests.adapter = adapter
 
         /*Get Listener*/
         val listener = object : OnGuestListener {
@@ -52,8 +53,8 @@ class AllGuestsFragment : Fragment() {
 
             }
 
-            override fun onDelete(id: Int) {
-                viewModel.delete(id)
+            override fun onDelete(guest: GuestModel) {
+                viewModel.delete(guest)
                 viewModel.getAllGuests()
 
             }

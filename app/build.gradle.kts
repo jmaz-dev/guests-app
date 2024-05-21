@@ -36,6 +36,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    configurations {
+        all {
+            exclude(group = "com.intellij", module = "annotations")
+        }
+    }
 }
 
 dependencies {
