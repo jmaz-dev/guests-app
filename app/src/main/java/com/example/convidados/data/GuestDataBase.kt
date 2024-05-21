@@ -18,9 +18,10 @@ abstract class GuestDataBase : RoomDatabase() {
         fun getDatabase(context: Context): GuestDataBase {
             if (!::INSTANCE.isInitialized) {
                 synchronized(GuestDataBase::class) {
-                    INSTANCE = Room.databaseBuilder(context, GuestDataBase::class.java, "guestDB")
+                    INSTANCE = Room.databaseBuilder(context, GuestDataBase::class.java, "guestdb")
                         .addMigrations(MIGRATION_1_2)
                         .allowMainThreadQueries()
+
                         .build()
                 }
             }
